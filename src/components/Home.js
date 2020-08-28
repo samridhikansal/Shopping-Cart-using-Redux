@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ItemCard from "./ItemCard";
+import { connect } from "react-redux";
 
-const Home = () => {
+const Home = ({ itemState }) => {
   const items = [
     { id: 1, itemName: "item1", desc: " loreum ipsum item1......" },
     { id: 2, itemName: "item2", desc: " loreum ipsum  item2......" },
     { id: 3, itemName: "item3", desc: " loreum ipsum  item3......" },
     { id: 4, itemName: "item4", desc: " loreum ipsum  item4......" },
   ];
+
   return (
     <div
       style={{
@@ -16,6 +18,7 @@ const Home = () => {
         justifyContent: "space-around",
       }}
     >
+      {console.log(itemState)}
       {items.map((item) => {
         return (
           <div style={{ display: "flex", margin: "20px" }}>
@@ -24,7 +27,7 @@ const Home = () => {
               key={item.id}
               itemName={item.itemName}
               itemDesc={item.desc}
-              x
+              id={item.id}
             ></ItemCard>{" "}
           </div>
         );
@@ -33,4 +36,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return { itemState: state.totalItems };
+};
+export default connect(mapStateToProps, null)(Home);

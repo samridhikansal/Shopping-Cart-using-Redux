@@ -1,7 +1,8 @@
 import React from "react";
 import { FaCartPlus } from "react-icons/fa";
+import { connect } from "react-redux";
 
-const ItemCard = ({ itemName, itemDesc }) => {
+const ItemCard = ({ itemName, itemDesc, id, cart, addItem }) => {
   return (
     <div
       style={{
@@ -15,13 +16,28 @@ const ItemCard = ({ itemName, itemDesc }) => {
         border: "solid",
       }}
     >
-      <h1> {itemName}</h1>
+      <h1>
+        {" "}
+        {itemName}
+        {cart}
+      </h1>
       <p> {itemDesc} </p>
-      <button>
+      <button
+        onClick={() => {
+          addItem({ id });
+        }}
+      >
         Add to <FaCartPlus></FaCartPlus>{" "}
       </button>
     </div>
   );
 };
-
-export default ItemCard;
+const mapStateToProps = (state) => {
+  return { cart: state.totalitems };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItem: (id) => dispatch({ type: "INCREMENT", id }),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ItemCard);
